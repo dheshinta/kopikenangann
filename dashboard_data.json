@@ -1,0 +1,61 @@
+{
+    "top_styles": [
+        {
+            "STYLE": "238279_WEW PUSH-UP",
+            "ORDER QTY": 1964749.0
+        },
+        {
+            "STYLE": "SE6900",
+            "ORDER QTY": 1643055.0
+        },
+        {
+            "STYLE": 8260,
+            "ORDER QTY": 1518718.0
+        },
+        {
+            "STYLE": 8334,
+            "ORDER QTY": 1407370.0
+        },
+        {
+            "STYLE": "RA3561W",
+            "ORDER QTY": 1094519.0
+        }
+    ],
+    "production_data": [
+        {
+            "Date": "2025-10-01",
+            "MOLD S1": 1000,
+            "MOLD S2": 800,
+            "TRIM S1": 600,
+            "TRIM S2": 700
+        },
+        {
+            "Date": "2025-10-02",
+            "MOLD S1": 1100,
+            "MOLD S2": 900,
+            "TRIM S1": 700,
+            "TRIM S2": 800
+        },
+        {
+            "Date": "2025-10-03",
+            "MOLD S1": 1200,
+            "MOLD S2": 950,
+            "TRIM S1": 750,
+            "TRIM S2": 850
+        },
+        {
+            "Date": "2025-10-04",
+            "MOLD S1": 1300,
+            "MOLD S2": 1000,
+            "TRIM S1": 800,
+            "TRIM S2": 900
+        },
+        {
+            "Date": "2025-10-05",
+            "MOLD S1": 1400,
+            "MOLD S2": 1050,
+            "TRIM S1": 850,
+            "TRIM S2": 950
+        }
+    ]
+}

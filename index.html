@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Kopi Kenangan - Executive Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-slate-800">
+    <header class="bg-[#4a3428] text-white p-6 shadow-md">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold tracking-tighter">KOPI KENANGAN</h1>
+                <p class="text-amber-200 text-xs">Analytics Dashboard for Management</p>
+            </div>
+            <select id="cityFilter" class="bg-white/10 border border-white/20 text-white rounded-lg px-4 py-2 text-sm outline-none">
+                <option value="All" class="text-black">Seluruh Indonesia</option>
+                <option value="Jakarta" class="text-black">Jakarta</option>
+                <option value="Surabaya" class="text-black">Surabaya</option>
+            </select>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-amber-600">
+                <p class="text-xs font-bold text-gray-400 uppercase">Revenue</p>
+                <h2 id="revVal" class="text-2xl font-black">Rp 42.5M</h2>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-amber-600">
+                <p class="text-xs font-bold text-gray-400 uppercase">Top Produk</p>
+                <h2 id="prodVal" class="text-xl font-bold">Kenangan Mantan</h2>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-amber-600">
+                <p class="text-xs font-bold text-gray-400 uppercase">Jam Teramai</p>
+                <h2 id="hourVal" class="text-2xl font-black">09:00 AM</h2>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-amber-600">
+                <p class="text-xs font-bold text-gray-400 uppercase">Total Sales</p>
+                <h2 id="salesVal" class="text-2xl font-black">1.250 Unit</h2>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <h3 class="font-bold text-gray-600 mb-4">Proporsi Penjualan Kategori</h3>
+                <canvas id="catChart"></canvas>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <h3 class="font-bold text-gray-600 mb-4">Traffic Berdasarkan Jam</h3>
+                <canvas id="lineChart"></canvas>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+            <h3 class="font-bold text-gray-600 mb-4">Top 5 Performa Produk Keseluruhan</h3>
+            <canvas id="barChart" height="100"></canvas>
+        </div>
+
+        <button onclick="window.print()" class="mt-8 bg-slate-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-slate-700 transition">
+            Export to PDF / Print Report
+        </button>
+    </main>
+
+    <script>
+        const ctx1 = document.getElementById('catChart');
+        const ctx2 = document.getElementById('lineChart');
+        const ctx3 = document.getElementById('barChart');
+
+        let dataStore = {
+            "All": { rev: "Rp 42.5M", prod: "Kenangan Mantan", hour: "09:00 AM", sales: "1.250", cat: [45, 35, 20], line: [10, 25, 80, 40, 30, 90, 45], bar: [412, 345, 298, 156, 110] },
+            "Jakarta": { rev: "Rp 25.0M", prod: "Kenangan Mantan", hour: "08:30 AM", sales: "750", cat: [50, 30, 20], line: [5, 20, 60, 30, 25, 70, 40], bar: [250, 200, 150, 80, 70] },
+            "Surabaya": { rev: "Rp 17.5M", prod: "Susu Sultan", hour: "14:00 PM", sales: "500", cat: [35, 45, 20], line: [5, 5, 20, 10, 5, 20, 5], bar: [162, 145, 148, 76, 40] }
+        };
+
+        let catC = new Chart(ctx1, { type: 'doughnut', data: { labels: ['Kopi', 'Non-Kopi', 'Bakery'], datasets: [{ data: dataStore.All.cat, backgroundColor: ['#4a3428', '#d9b99b', '#f3e5d8'] }] } });
+        let lineC = new Chart(ctx2, { type: 'line', data: { labels: ['07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00'], datasets: [{ label: 'Unit', data: dataStore.All.line, borderColor: '#4a3428', tension: 0.3 }] } });
+        let barC = new Chart(ctx3, { type: 'bar', data: { labels: ['Kenangan Mantan', 'Susu Sultan', 'Roti Coklat', 'Iced Latte', 'Thai Tea'], datasets: [{ label: 'Unit Terjual', data: dataStore.All.bar, backgroundColor: '#4a3428' }] } });
+
+        document.getElementById('cityFilter').addEventListener('change', (e) => {
+            const val = e.target.value;
+            const d = dataStore[val];
+            document.getElementById('revVal').innerText = d.rev;
+            document.getElementById('prodVal').innerText = d.prod;
+            document.getElementById('hourVal').innerText = d.hour;
+            document.getElementById('salesVal').innerText = d.sales + " Unit";
+            
+            catC.data.datasets[0].data = d.cat; catC.update();
+            lineC.data.datasets[0].data = d.line; lineC.update();
+            barC.data.datasets[0].data = d.bar; barC.update();
+        });
+    </script>
+</body>
+</html>
